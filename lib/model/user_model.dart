@@ -60,7 +60,7 @@ class UserModel {
       uid: map['uid'] ?? '',
       isAuthenticated: map['isAuthenticated'] ?? false,
       karma: map['karma'] ?? 0,
-      awards: List<String>.from((map['awards'])),
+      awards: List<String>.from((map['awards'] ?? [])),
     );
   }
 

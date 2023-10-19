@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:reddit/features/auth/screens/login_screen.dart';
+import 'package:reddit/features/community/screens/add_mods_screen.dart';
 import 'package:reddit/features/community/screens/community_screen.dart';
 import 'package:reddit/features/community/screens/create_community_screen.dart';
+import 'package:reddit/features/community/screens/edit-communtiy_screen.dart';
 import 'package:reddit/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit/features/home/screen/home_screen.dart';
+import 'package:reddit/features/post/screen/add_post_type_screen.dart';
+import 'package:reddit/features/post/screen/comment_screen.dart';
+import 'package:reddit/features/user_profile/screens/edit_profile_screen.dart';
+import 'package:reddit/features/user_profile/screens/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
 
 final loggedOutRoute = RouteMap(routes: {
@@ -24,7 +30,39 @@ final loggedInRoute = RouteMap(routes: {
           name: route.pathParameters['name']!,
         ),
       ),
-  '/mod-tool': (route) => const MaterialPage(
-        child: ModToolsScreen(),
+  '/mod-tool/:name': (route) => MaterialPage(
+        child: ModToolsScreen(
+          name: route.pathParameters['name']!,
+        ),
+      ),
+  '/edit-community/:name': (route) => MaterialPage(
+        child: EditCommuntiyScreen(
+          name: route.pathParameters['name']!,
+        ),
+      ),
+  '/add-mods/:name': (route) => MaterialPage(
+        child: AddModsScreen(
+          name: route.pathParameters['name']!,
+        ),
+      ),
+  '/u/:uid': (route) => MaterialPage(
+        child: UserProfileScreen(
+          uid: route.pathParameters['uid']!,
+        ),
+      ),
+  '/edit-profile/:uid': (route) => MaterialPage(
+        child: EditProfileScreen(
+          uid: route.pathParameters['uid']!,
+        ),
+      ),
+  '/add-post/:type': (route) => MaterialPage(
+        child: AddPostTypeScreen(
+          type: route.pathParameters['type']!,
+        ),
+      ),
+  '/post/:postId/comments': (route) => MaterialPage(
+        child: CommentsScreen(
+          postId: route.pathParameters['postId']!,
+        ),
       ),
 });

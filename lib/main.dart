@@ -33,7 +33,7 @@ class _RedditAppState extends ConsumerState<RedditApp> {
         .watch(authControllerProvider.notifier)
         .getUserData(data.uid)
         .first;
-    ref.read(userProvider.notifier).update((state) => userModel);
+    ref.watch(userProvider.notifier).update((state) => userModel);
     setState(() {});
   }
 
@@ -42,7 +42,7 @@ class _RedditAppState extends ConsumerState<RedditApp> {
     return ref.watch(authStateChangeProvider).when(
           data: (data) => MaterialApp.router(
             title: "Reddit App",
-            theme: Pallete.darkModeAppTheme,
+            theme: ref.watch(themeNotifierProfider),
             routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
               if (data != null) {
                 getData(ref, data);

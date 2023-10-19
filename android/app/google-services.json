@@ -14,15 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "546927786059-1hndctjlv944dkighs4ot1usomb5k6dr.apps.googleusercontent.com",
+          "client_id": "546927786059-jif358sneit1evre2f8tu3ks1ev03ffb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.reddit",
-            "certificate_hash": "37e439c3d8aaf5c17dde165cd3983cd56333a24c"
+            "certificate_hash": "7aa16628f22305f667013c200ba939fd161d16b5"
           }
         },
         {
-          "client_id": "546927786059-t2atque95m2njeqcabp0u4jo1t3b2leh.apps.googleusercontent.com",
+          "client_id": "546927786059-a3jk6b4l21psm7cd8psls6e3uv0k466l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "546927786059-t2atque95m2njeqcabp0u4jo1t3b2leh.apps.googleusercontent.com",
+              "client_id": "546927786059-a3jk6b4l21psm7cd8psls6e3uv0k466l.apps.googleusercontent.com",
               "client_type": 3
             },
             {

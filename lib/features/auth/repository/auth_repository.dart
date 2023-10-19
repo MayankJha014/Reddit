@@ -38,19 +38,23 @@ class AuthRepository {
   //It tells us about user sign and sign out state
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  FutureEither<UserModel> signWithGoogle() async {
+  FutureEither<UserModel> signWithGoogle(bool isFromLogin) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       final googleAuth = await googleUser?.authentication;
-
+      UserCredential userCredential;
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth?.idToken,
         accessToken: googleAuth?.accessToken,
       );
 
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+      if (isFromLogin) {
+        userCredential = await _auth.signInWithCredential(credential);
+      } else {
+        userCredential =
+            await _auth.currentUser!.linkWithCredential(credential);
+      }
 
       UserModel userModel;
       if (userCredential.additionalUserInfo!.isNewUser) {
@@ -61,7 +65,16 @@ class AuthRepository {
           uid: userCredential.user!.uid,
           isAuthenticated: true,
           karma: 0,
-          awards: [],
+          awards: [
+            'awesomeAns',
+            'gold',
+            'platinum',
+            'helpful',
+            'plusone',
+            'rocket',
+            'thankyou',
+            'til',
+          ],
         );
         await _users.doc(userCredential.user?.uid).set(userModel.toMap());
       } else {
@@ -73,6 +86,35 @@ class AuthRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  FutureEither<UserModel> signInAsGuest() async {
+    try {
+      var userCredential = await _auth.signInAnonymously();
+
+      UserModel userModel = UserModel(
+        name: 'Guest',
+        profilePic: Constants.avatarDefault,
+        banner: Constants.bannerDefault,
+        uid: userCredential.user!.uid,
+        isAuthenticated: false,
+        karma: 0,
+        awards: [],
+      );
+
+      await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+
+      return right(userModel);
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  void logout() async {
+    await _googleSignIn.signOut();
+    await _auth.signOut();
   }
 
   Stream<UserModel> getUserData(String uid) {
